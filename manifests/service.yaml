@@ -1,0 +1,40 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: oms2
+#   labels:
+#     env  : prod
+#     owner: tvardovskyi
+# spec:
+#   selector:
+#     project: oms2   # Selecting PODS with those Labels
+#   ports:
+#     - name      : app-listener
+#       protocol  : TCP
+#       port      : 8080  # Port on Load Balancer
+#       targetPort: 8080  # Port on POD
+#   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oms2
+  labels:
+    app: oms-app
+spec:
+  type: ExternalName
+  externalName: oms2.c9hkl4crwgr6.eu-central-1.rds.amazonaws.com
+  
+
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: teachua
+# spec:
+#   selector:
+#     app: oms2
+#   ports:
+#   - protocol: "TCP"
+#     port: 8888
+#     targetPort: 8080

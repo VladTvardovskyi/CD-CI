@@ -1,0 +1,75 @@
+# apiVersion : apps/v1
+# kind: Deployment
+# metadata:
+#   name: oms2
+#   labels:
+#     app : oms2
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       project: oms2
+#   template:
+#     metadata:
+#       labels:
+#         project: oms2   # Service will look for those PODS Labels!!!
+#     spec:
+#       containers:
+#         - name : app-web
+#           image: chocoman55/tomcat_oms:latest
+#           # env:
+#           #   - name: DATASOURCE_URL
+#           #     value: "my-oms"
+#           #   - name: DATASOURCE_PASSWORD
+#           #     value: "Gogi3255"
+#           #   - name: DATASOURCE_USER
+#           #     value: "devops"
+#           ports:
+#             - containerPort: 8080
+
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: oms2
+#   labels:
+#     env  : prod
+#     owner: tvardovskyi
+# spec:
+#   selector:
+#     project: oms2   # Selecting PODS with those Labels
+#   ports:
+#     - name      : app-listener
+#       protocol  : TCP
+#       port      : 8080  # Port on Load Balancer
+#       targetPort: 8080  # Port on POD
+#   type: LoadBalancer
+# ---
+# apiVersion : apps/v1
+# kind: Deployment
+# metadata:
+#   name: my-back
+#   labels:
+#     app : my-back
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       project: teachua
+#   template:
+#     metadata:
+#       labels:
+#         project: teachua  # Service will look for those PODS Labels!!!
+#     spec:
+#       containers:
+#         - name : app-back
+#           image: buchyk/backend:39
+#           ports:
+#             - containerPort: 8080
+#           env:
+#             - name: DATASOURCE_URL
+#               value: "my-back"
+#             - name: DATASOURCE_PASSWORD
+#               value: "Gogi3255"
+#             - name: DATASOURCE_USER
+#               value: "devops"
