@@ -23,7 +23,7 @@ pipeline{
                 expression{ params.ACT == 'deploy'}
             }
             steps{
-                git 'https://github.com/VladTvardovskyi/oms2.git'
+                git ([url:'https://github.com/VladTvardovskyi/oms2.git', branch: main, credentialsId: 'Git']) 
                 dir ('/home/ubuntu/demo'){
                     sh "mvn clean package -Dmaven.test.skip=true"
             }
