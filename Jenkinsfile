@@ -45,12 +45,12 @@ pipeline{
                     }
                 }
             }
-            stage('Terraform deploying'){
-                when{
+          stage('Terraform deploying'){
+            when{
                 expression{ params.ACT == 'deploy'}
                 }
-                steps{
-                    dir ('project/') {
+            steps{
+                dir ('project/') {
                     withAWS(credentials: 'aws_credentials', region: 'eu-central-1'){
                         sh "terraform apply -auto-approve"
                         sh 'kubectl apply -f manifest/tomcat_oms.yaml'
