@@ -18,7 +18,7 @@ pipeline{
         )
     }
      stages{
-       /* stage('Building oms') {
+        stage('Building oms') {
             when{
                 expression{ params.ACT == 'deploy'}
             }
@@ -31,7 +31,7 @@ pipeline{
                 success{
                     archiveArtifacts 'target/*.war'
                 }
-            }*/
+            }
         
         stage('Terraform build') {
             when{
@@ -49,7 +49,7 @@ pipeline{
                    }
                 }
             }
-            /*stage('download Helm') {
+            stage('download Helm') {
             steps {
                 script {
                     sh (
@@ -86,9 +86,9 @@ pipeline{
                     }
                 }
             }
-        }   */  
+        }    
             
-         /*stage('Terraform deploying') {
+         stage('Terraform deploying') {
             when {
                 expression{ params.ACT == 'deploy'}
                  }
@@ -99,24 +99,18 @@ pipeline{
                         sh 'kubectl apply -f manifest/tomcat_oms.yaml'
                         sh 'kubectl apply -f manifest/service.yaml'
                         sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
-                        //omsDeploying()
                         }
                     }
                 }
            }
-            /*stage('update-kubeconfig') {
+            stage('update-kubeconfig') {
                 steps {
                     withAWS(credentials: 'aws-credentials') {
                         sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
                     }
              }
-         }*/
-      
-        /*void omsDeploying(){
-            sh 'kubectl apply -f manifest/tomcat_oms.yaml'
-            sh 'kubectl apply -f manifest/service.yaml'
-        }*/
-        }
+         
+            }
         
     } 
 }
