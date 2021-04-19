@@ -1,8 +1,8 @@
 pipeline{
     agent any 
     environment { // the env vars are visible for all stages
-        DOCKERHUB = credentialsId('af67dbcf-3f85-438f-b2e6-6e19403bac54')
-        AWS_CREDENTIALS = credentialsId('aws-credentials')
+        DOCKERHUB = credentials('af67dbcf-3f85-438f-b2e6-6e19403bac54')
+        AWS_CREDENTIALS = credentials('aws-credentials')
         RELEASE_NAME = "demo4"
     }
     tools{
