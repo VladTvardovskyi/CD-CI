@@ -6,7 +6,7 @@ pipeline{
         RELEASE_NAME = "demo4"
     }
     tools{
-        //terraform 'terraform-0.14.7'
+        terraform 'Terraform'
         jdk 'OpenJDK-11'
         maven 'maven'
     }
@@ -18,7 +18,7 @@ pipeline{
         )
     }
     stages{
-        stage('Building oms') {
+        /*stage('Building oms') {
             when{
                 expression{ params.ACT == 'deploy'}
             }
@@ -30,6 +30,19 @@ pipeline{
             post{
                 success{
                     archiveArtifacts 'target/*.war'
+                }
+            }
+        }*/
+        stage('Terraform init plan') {
+            when{
+                expression{ params.ACT == 'deploy'}
+            }
+            steps{
+                dir ('VladTvardovskyi/CD-CI/project') {
+                    withAWS(credentials: 'aws-credentials', region: 'eu-central-1'){
+                        sh "terraform init"
+                        sh "terraform plan"
+                    }
                 }
             }
         }
