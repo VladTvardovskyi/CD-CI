@@ -42,10 +42,14 @@ pipeline{
                     withAWS(credentials: 'aws_credentials', region: 'eu-central-1') {
                         sh "terraform init"
                         sh "terraform plan"
+                        sh "terraform apply -auto-approve"
+                        sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
+                        sh 'kubectl apply -f manifest/tomcat_oms.yaml'
+                        sh 'kubectl apply -f manifest/service.yaml'
                    }
                 }
             }
-         stage('Terraform deploying') {
+         /*stage('Terraform deploying') {
             when {
                 expression{ params.ACT == 'deploy'}
                  }
@@ -55,6 +59,7 @@ pipeline{
                         sh "terraform apply -auto-approve"
                         sh 'kubectl apply -f manifest/tomcat_oms.yaml'
                         sh 'kubectl apply -f manifest/service.yaml'
+                        sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
                         //omsDeploying()
                         }
                     }
