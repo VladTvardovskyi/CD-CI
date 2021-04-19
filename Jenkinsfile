@@ -17,21 +17,21 @@ pipeline{
             name: 'ACT'
         )
     }
-
-    stage('Building oms') {
-        when{
-            expression{ params.ACT == 'deploy'}
-        }
-        steps{
-            git 'https://github.com/VladTvardovskyi/oms2.git'
-            dir ('/home/ubuntu/demo'){
-                sh "mvn clean package -Dmaven.test.skip=true"
-        }
-        post{
-            success{
-                archiveArtifacts 'target/*.war'
+    stages{
+        stage('Building oms') {
+            when{
+                expression{ params.ACT == 'deploy'}
+            }
+            steps{
+                git 'https://github.com/VladTvardovskyi/oms2.git'
+                dir ('/home/ubuntu/demo'){
+                    sh "mvn clean package -Dmaven.test.skip=true"
+            }
+            post{
+                success{
+                    archiveArtifacts 'target/*.war'
+                }
             }
         }
-    }
 }
 }
