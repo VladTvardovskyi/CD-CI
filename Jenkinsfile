@@ -60,19 +60,19 @@ pipeline{
                     }
                 }
             }
-            stage('update-kubeconfig') {
+            /*stage('update-kubeconfig') {
                 steps {
                     withAWS(credentials: 'aws-credentials') {
                         sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
                     }
              }
-         }
+         }*/
      }
         /*void omsDeploying(){
             sh 'kubectl apply -f manifest/tomcat_oms.yaml'
             sh 'kubectl apply -f manifest/service.yaml'
         }*/
-    }
-        }
+    
+        
     } 
 }
