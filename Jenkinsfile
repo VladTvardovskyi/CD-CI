@@ -45,7 +45,7 @@ pipeline{
                    }
                 }
             }
-          stage('Terraform deploying') {
+         /* stage('Terraform deploying') {
             when {
                 expression{ params.ACT == 'deploy'}
                  }
