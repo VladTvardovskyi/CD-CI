@@ -2,7 +2,7 @@ pipeline{
     agent any 
     environment { // the env vars are visible for all stages
         DOCKERHUB = credentials('af67dbcf-3f85-438f-b2e6-6e19403bac54')
-        AWS_CREDENTIALS = credentials('aws-credentials')
+        AWS_CREDENTIALS = credentials('aws_credentials')
         RELEASE_NAME = "demo4"
     }
     tools{
@@ -39,7 +39,7 @@ pipeline{
             }
             steps{
                 dir ('VladTvardovskyi/CD-CI/project') {
-                    withAWS(credentials: 'aws-credentials', region: 'eu-central-1'){
+                    withAWS(credentials: 'aws_credentials', region: 'eu-central-1'){
                         sh "terraform init"
                         sh "terraform plan"
                     }
