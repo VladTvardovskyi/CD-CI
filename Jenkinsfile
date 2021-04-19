@@ -111,7 +111,8 @@ pipeline{
                     }
              }
          }*/
-     }
+        }
+        }
         /*void omsDeploying(){
             sh 'kubectl apply -f manifest/tomcat_oms.yaml'
             sh 'kubectl apply -f manifest/service.yaml'
