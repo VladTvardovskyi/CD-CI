@@ -6,9 +6,9 @@ pipeline{
         RELEASE_NAME = "demo4"
     }
     tools{
-        terraform 'terraform-0.14.7'
-        jdk 'jdk-11'
-        maven 'M3'
+        //terraform 'terraform-0.14.7'
+        jdk 'OpenJDK-11'
+        maven 'maven'
     }
     
     parameters{
