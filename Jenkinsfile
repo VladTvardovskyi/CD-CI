@@ -17,8 +17,8 @@ pipeline{
             name: 'ACT'
         )
     }
-    stages{
-        /*stage('Building oms') {
+     stages{
+       /* stage('Building oms') {
             when{
                 expression{ params.ACT == 'deploy'}
             }
@@ -31,8 +31,8 @@ pipeline{
                 success{
                     archiveArtifacts 'target/*.war'
                 }
-            }
-        }*/
+            }*/
+        }
         stage('Terraform init plan') {
             when{
                 expression{ params.ACT == 'deploy'}
@@ -42,13 +42,52 @@ pipeline{
                     withAWS(credentials: 'aws_credentials', region: 'eu-central-1') {
                         sh "terraform init"
                         sh "terraform plan"
-                        sh "terraform apply -auto-approve"
-                        sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
-                        sh 'kubectl apply -f manifest/tomcat_oms.yaml'
-                        sh 'kubectl apply -f manifest/service.yaml'
+                        //sh "terraform apply -auto-approve"
+                      //  sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
+                      //  sh 'kubectl apply -f manifest/tomcat_oms.yaml'
+                      //  sh 'kubectl apply -f manifest/service.yaml'
                    }
                 }
             }
+            /*stage('download Helm') {
+            steps {
+                script {
+                    sh (
+                        label: "Installing Helm",
+                        script: """#!/usr/bin/env bash
+                        wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
+                        tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
+                        mv linux-amd64/helm helm
+                        """
+                    )
+                    sh 'helm version'                   
+                }
+            }
+        }
+
+        stage('deploy datadog agent for Kubernetes') {
+            steps {
+                dir('helm/datadog'){
+                    withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
+                        withCredentials([string(credentialsId: 'datadog', variable: 'DATADOG_KEY')]) {
+                            script {
+                                sh (
+                                    script :"""helm repo add datadog https://helm.datadoghq.com && \
+                                    helm repo add stable https://charts.helm.sh/stable && \
+                                    helm repo update && \
+                                    helm install $RELEASE_NAME -f values.yaml \
+                                    --set datadog.site='datadoghq.com' \
+                                    --set datadog.apiKey=${DATADOG_KEY} datadog/datadog \
+                                    --kubeconfig=/var/lib/jenkins/.kube/config
+                                    """
+                                )
+                            }    
+                        }
+                    }
+                }
+            }
+        }   */  
+            
          /*stage('Terraform deploying') {
             when {
                 expression{ params.ACT == 'deploy'}
