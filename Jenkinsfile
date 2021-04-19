@@ -32,7 +32,7 @@ pipeline{
                     archiveArtifacts 'target/*.war'
                 }
             }*/
-        }
+        
         stage('Terraform init plan') {
             when{
                 expression{ params.ACT == 'deploy'}
@@ -116,7 +116,7 @@ pipeline{
             sh 'kubectl apply -f manifest/tomcat_oms.yaml'
             sh 'kubectl apply -f manifest/service.yaml'
         }*/
-    
+        }
         
     } 
 }
