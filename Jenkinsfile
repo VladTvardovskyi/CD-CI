@@ -38,7 +38,7 @@ pipeline{
                 expression{ params.ACT == 'deploy'}
             }
             steps{
-                dir ('/home/ubuntu/demo') {
+                dir ('home/') {
                     withAWS(credentials: 'aws_credentials', region: 'eu-central-1'){
                         sh "terraform init"
                         sh "terraform plan"
