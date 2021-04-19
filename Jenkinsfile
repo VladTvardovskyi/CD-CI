@@ -59,7 +59,7 @@ pipeline{
                         }
                     }
                 }
-            }
+            
             /*stage('update-kubeconfig') {
                 steps {
                     withAWS(credentials: 'aws-credentials') {
