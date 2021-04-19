@@ -42,10 +42,10 @@ pipeline{
                     withAWS(credentials: 'aws_credentials', region: 'eu-central-1') {
                         sh "terraform init"
                         sh "terraform plan"
-                        //sh "terraform apply -auto-approve"
-                      //  sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
-                      //  sh 'kubectl apply -f manifest/tomcat_oms.yaml'
-                      //  sh 'kubectl apply -f manifest/service.yaml'
+                        sh "terraform apply -auto-approve"
+                        sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
+                        sh 'kubectl apply -f manifest/tomcat_oms.yaml'
+                        sh 'kubectl apply -f manifest/service.yaml'
                    }
                 }
             }
@@ -86,31 +86,6 @@ pipeline{
                     }
                 }
             }
-        }    
-            
-         stage('Terraform deploying') {
-            when {
-                expression{ params.ACT == 'deploy'}
-                 }
-            steps {
-                dir ('project/') {
-                    withAWS(credentials: 'aws_credentials', region: 'eu-central-1') {
-                        sh "terraform apply -auto-approve"
-                        sh 'kubectl apply -f manifest/tomcat_oms.yaml'
-                        sh 'kubectl apply -f manifest/service.yaml'
-                        sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
-                        }
-                    }
-                }
-           }
-            stage('update-kubeconfig') {
-                steps {
-                    withAWS(credentials: 'aws-credentials') {
-                        sh 'aws --region eu-central-1 eks update-kubeconfig --name terraform-eks-demo'
-                    }
-             }
-         
-            }
-        
+        }       
     } 
 }
