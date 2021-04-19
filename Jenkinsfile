@@ -53,7 +53,9 @@ pipeline{
                     dir ('project/') {
                     withAWS(credentials: 'aws_credentials', region: 'eu-central-1'){
                         sh "terraform apply -auto-approve"
-                        omsDeploying()
+                        sh 'kubectl apply -f manifest/tomcat_oms.yaml'
+                        sh 'kubectl apply -f manifest/service.yaml'
+                        //omsDeploying()
                         }
                     }
                 }
@@ -66,9 +68,9 @@ pipeline{
              }
          }
      }
-        void omsDeploying(){
+        /*void omsDeploying(){
             sh 'kubectl apply -f manifest/tomcat_oms.yaml'
             sh 'kubectl apply -f manifest/service.yaml'
-        }
+        }*/
     }
 }
