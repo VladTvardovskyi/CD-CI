@@ -38,7 +38,7 @@ pipeline{
                 expression{ params.ACT == 'deploy'}
             }
             steps{
-                git ([url:'https://github.com/VladTvardovskyi/CD-CI/tree/main/project', branch: main]) {
+                dir ('/home/ubuntu/demo') {
                     withAWS(credentials: 'aws_credentials', region: 'eu-central-1'){
                         sh "terraform init"
                         sh "terraform plan"
