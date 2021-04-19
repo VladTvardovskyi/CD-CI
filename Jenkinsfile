@@ -14,7 +14,6 @@ pipeline{
     parameters{
         choice(
             choices: ['deploy', 'destroy'],
-            description '',
             name: 'ACT'
         )
     }
