@@ -33,7 +33,7 @@ pipeline{
                 }
             }*/
         
-        stage('Terraform init plan') {
+        stage('Terraform build') {
             when{
                 expression{ params.ACT == 'deploy'}
             }
