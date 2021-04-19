@@ -5,7 +5,7 @@ pipeline{
         AWS_CREDENTIALS = credentialsId('aws-credentials')
         RELEASE_NAME = "demo4"
     }
-    tool{
+    tools{
         terraform 'terraform-0.14.7'
         jdk 'jdk-11'
         maven 'M3'
